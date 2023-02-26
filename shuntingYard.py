@@ -1,41 +1,44 @@
+# | -> or
+# . -> concatenation
+# * -> kleene star
+# + -> positive
+# ? -> 0 or once
 precedence = {"|": 0, ".": 1, "*": 2, "+": 2, "?": 2}
 
-def ShuntingY(infix):
+def ShuntingYard(infix:str):
     output = []
     operators = []
+
     i = 0
     while i < len(infix):
-        # Leer el siguiente símbolo
+        # Read the next symbol
         c = infix[i]
-        # Si es una letra o número, agregarlo a la salida
+        # Letter or number add it to the end
         if c.isalnum():
             output.append(c)
-        # Si es un paréntesis izquierdo, agregarlo a la pila de operadores
+        # Left bracket add it to the stack of operands
         elif c == "(":
             operators.append(c)
-        # Si es un operador
+        # If it's and operand
         elif c in precedence:
-            # Mientras haya operadores en la pila y el operador en la cima tenga mayor o igual precedencia
+            # While there are operands in the stack and this has the hightest precedence
             while operators and operators[-1] != "(" and precedence[operators[-1]] >= precedence[c]:
-                # Sacar el operador de la pila y agregarlo a la salida
+                # Take the operand out of the stack and add it to the output
                 output.append(operators.pop())
-            # Agregar el operador actual a la pila de operadores
+            # Add current operand to stack
             operators.append(c)
-        # Si es un paréntesis derecho
+        # Right bracket
         elif c == ")":
-            # Mientras el operador en la cima de la pila no sea un paréntesis izquierdo
+            # While the top operand isn't a left bracket
             while operators and operators[-1] != "(":
-                # Sacar el operador de la pila y agregarlo a la salida
+                # Take the operand out of the stack and add it to the output
                 output.append(operators.pop())
-            # Sacar el paréntesis izquierdo de la pila sin agregarlo a la salida
+            # Take the left bracket and add it to the satcj without adding it to the output
             operators.pop()
-        # Ignorar cualquier otro símbolo
+        # Ignore any other sybol
         i += 1
-    # Sacar cualquier operador que quede en la pila y agregarlo a la salida
+    # Take any operand left and add it to the stack
     while operators:
         output.append(operators.pop())
-    # Unir la lista de salida en una cadena y devolverla
+    # Join the list
     return "".join(output)
-
-expression = '0?(1?)?0+'
-print(ShuntingY(expression))
