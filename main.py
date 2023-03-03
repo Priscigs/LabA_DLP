@@ -1,12 +1,9 @@
-from ShuntingYard import ShuntingYard
 from Thompson import Thompson
+from ShuntingYard import ShuntingYard
 from Simulation import Simulation
 
 if __name__=="__main__":
-
-    expression = "(a*|b*).c"
+    expression = "(a|b)*abb"
     postfix = ShuntingYard(expression)
     nfa = Thompson(postfix)
-    dot = Simulation(nfa)
-    dot.render('nfa_thompson', format = 'png', view = True)
-
+    sim = Simulation(nfa)
