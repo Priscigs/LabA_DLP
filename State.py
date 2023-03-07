@@ -5,7 +5,7 @@ class State:
     def __init__(self, label: str = None, transitions: dict = None):
         # If no transitions are given, set transitions to an empty dictionary.
         self.transitions = transitions or {}
-        
+         
         # Set the label of the symbol.
         self.label = label
         
@@ -25,3 +25,4 @@ class State:
     def get_transitions(self):
         # Get all the transitions from this symbol as a dictionary of symbol labels to lists of state labels.
         return self.transitions
+

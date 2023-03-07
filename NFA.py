@@ -4,7 +4,7 @@ import networkx as nx
 import pydot
 from graphviz import Digraph
 
-class NFA():
+class NFA(): 
     def __init__(self, initial_state:State, accept_state:State) -> None:
         self.initial_state: State = initial_state
         self.accept_state: State = accept_state
@@ -48,3 +48,4 @@ class NFA():
             visited.append(afn) 
         # Return the final transition function dictionary
         return trans
+

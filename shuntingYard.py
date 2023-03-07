@@ -27,7 +27,7 @@ def ShuntingYard(expression):
     precedence = {"|": 0, ".": 1, "*": 2, "+": 2, "?": 2}
     
     # Add a "." between concatenated expressions
-    infToPos = ""
+    infToPos = "" 
     for i in range(len(expression)):
         if i == len(expression)-1:
             infToPos += expression[i]

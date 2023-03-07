@@ -75,7 +75,7 @@ def Thompson(expression):
         # If the character is '?', pop the top state off the stack, create a new initial_state state 
         # and accept state, and add ε-transitions from the initial_state state to the popped state 
         # and from the popped state to the accept state. Then push the initial_state state onto 
-        # the stack.
+        # the stack. 
         elif c == "?":
             start_state = State(label = f'q{contador}')
             contador+=1
