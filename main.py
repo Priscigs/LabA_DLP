@@ -1,14 +1,21 @@
 from Thompson import Thompson
 from ShuntingYard import ShuntingYard
-from Simulation import Simulation
-from Subconjuntos import construct_dfa
-from DFA import nfa_to_dfa
+from SimulationNFA import SimulationNFA
+from SimulationDFA import SimulationDFA
+from Subconjuntos import *
 
 if __name__=="__main__":
-    expression = "a(a?b*|c+)b|baa"
-    postfix = ShuntingYard(expression)
-    nfa = Thompson(postfix)
-    sim = Simulation(nfa) 
 
-    # dfa = nfa_to_dfa(nfa)
-    # print(dfa)
+    # Regular Expression
+    expression = "ab*ab*"
+
+    # Using Shunting Yard Algorithm for infix to postfix
+    postfix = ShuntingYard(expression)
+
+    # NFA Thompson
+    nfa = Thompson(postfix)
+    sim = SimulationNFA(nfa) 
+
+    # DFA Sub
+    afd = Subconjuntos(nfa)
+    sim2 = SimulationDFA(afd)

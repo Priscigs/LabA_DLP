@@ -3,7 +3,7 @@ import networkx as nx
 import pydot
 from graphviz import Digraph
 
-def Simulation(self): 
+def SimulationNFA(self): 
     # Initialize a list to store the edges
     self.edges = [] 
     # Initialize a dictionary to store the transition symbols

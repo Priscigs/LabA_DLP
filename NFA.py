@@ -48,4 +48,11 @@ class NFA():
             visited.append(afn) 
         # Return the final transition function dictionary
         return trans
-
+    
+    def getAplhabet(self):
+        alphabet = []
+        for transitions in self.transitions.values():
+            for character in transitions.keys():
+                if character not in alphabet and character!="ε":
+                    alphabet.append(character)
+        return alphabet
