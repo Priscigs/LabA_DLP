@@ -3,6 +3,8 @@ from ShuntingYard import ShuntingYard
 from SimulationNFA import SimulationNFA
 from SimulationDFA import SimulationDFA
 from Subconjuntos import *
+from Tree import Tree
+from TokensReader import regexCreate
 
 if __name__=="__main__":
 
@@ -19,3 +21,15 @@ if __name__=="__main__":
     # DFA Sub
     afd = Subconjuntos(nfa)
     sim2 = SimulationDFA(afd)
+
+    # DFA Direct
+    afd2 = Tree(expression)
+    #sim3 = SimulationDFA(afd2)
+
+    # Lex file to read and give the regular definition
+    file = "slr-3.yal"
+
+    if regexCreate(file):
+        regex = regexCreate(file)
+        print(regex)
+
