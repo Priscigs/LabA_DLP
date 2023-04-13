@@ -50,7 +50,7 @@ def rules(filename):
     line_counter = 1
     definitions, tokens = {}, {}
     rule_tokens = False
-
+ 
     # Open the file and read each line
     with open(filename, 'r', encoding='utf-8') as file:
         for line in file:

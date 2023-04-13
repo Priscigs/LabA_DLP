@@ -27,7 +27,7 @@ if __name__=="__main__":
     #sim3 = SimulationDFA(afd2)
 
     # Lex file to read and give the regular definition
-    file = "slr-3.yal"
+    file = "YALex/slr-3.yal"
 
     if regexCreate(file):
         regex = regexCreate(file)
