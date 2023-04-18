@@ -5,8 +5,10 @@ from SimulationDFA import SimulationDFA
 from Subconjuntos import *
 from Tree import Tree
 from TokensReader import regexCreate
+from Reader import Reader
+from analyzer import *
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     # Regular Expression
     expression = "ab*ab*"
@@ -27,9 +29,14 @@ if __name__=="__main__":
     #sim3 = SimulationDFA(afd2)
 
     # Lex file to read and give the regular definition
-    file = "YALex/slr-3.yal"
+    # file = "YALex/slr-3.yal"
 
-    if regexCreate(file):
-        regex = regexCreate(file)
-        print(regex)
+    # if regexCreate(file):
+    #     regex = regexCreate(file)
+    #     print(regex)
 
+    # YALex
+    Reader()
+
+    # Token identifier
+    analizar("YALex/srl-2.yal")
