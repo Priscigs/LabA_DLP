@@ -1,29 +1,13 @@
-(* Lexer para Gramática No. 4 *)
+let identificador = [_a-zA-Z][_a-zA-Z0-9]*
+let entero = 0|1|2|3|4|5|6|7|8|9
+let operador = \+|\-|\*
+let palabra_reservada = \b(if|for|while)\b
+let tabulaciones = \t|\n 
 
-(* Introducir cualquier header aqui *)
 
-let delim = [' ''\t''\n']
-let ws = delim+
-let letter = ['A'-'Z''a'-'z']
-let str = (_)*
-let digit = ['0'-'9']
-let digits = digit+
-let id = letter(letter|str|digit)*
-let number = digits(.digits)?('E'['+''-']?digits)?
-
-rule tokens = 
-    ws
-  | id        { return ID }               (* Cambie por una acción válida, que devuelva el token *)
-  | number    { return NUMBER }
-  | ';'       { return SEMICOLON }
-  | ":="      { return ASSIGNOP }
-  | '<'       { return LT }
-  | '='       { return EQ }
-  | '+'       { return PLUS }
-  | '-'       { return MINUS }
-  | '*'       { return TIMES }
-  | '/'       { return DIV }
-  | '('       { return LPAREN }
-  | ')'       { return RPAREN }
-
-(* Introducir cualquier trailer aqui *)
+rule tokens =
+identificador                   { printf("Identificador: %s\n", yytext); }
+| entero                        { printf("Entero: %s\n", yytext); }
+| operador                      { printf("Operador aritmético: %s\n", yytext); }
+| palabra_reservada             { printf("Palabra reservada: %s\n", yytext); }
+| tabulaciones                  { /* ignorar */ }

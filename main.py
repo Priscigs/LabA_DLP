@@ -37,10 +37,14 @@ if __name__ == "__main__":
     #     print(regex)
 
     # YALex
-    Reader()
+    # Reader()
+
+    # Read file
+    with open("YALex/input4yal.txt", "r") as archivo:
+        archivo_input = archivo.read()
 
     # Token identifier
-    analizar("YALex/srl-1.yal")
+    analizar(archivo_input)
 
     # # leer el archivo de entrada
     # with open("Pruebas/input1.txt", "r") as f:
