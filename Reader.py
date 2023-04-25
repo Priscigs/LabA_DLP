@@ -3,14 +3,14 @@ from NFA2 import regex_to_enfa, Simulate_epsilonNFA, Simulate_megautomata
 
 def Reader():
     # Input file names
-    # yalex_file_name = "YALex/slr-1.yal"
-    # input_file_name = "YALex/input1yal.txt"
+    yalex_file_name = "YALex/slr-1.yal"
+    input_file_name = "YALex/input1yal.txt"
 
     # yalex_file_name = "Pruebas/yalex1.yal"
     # input_file_name = "Pruebas/input1.txt"
 
-    yalex_file_name = "Pruebas/yalex2.yal"
-    input_file_name = "Pruebas/input3.txt"
+    # yalex_file_name = "Pruebas/yalex2.yal"
+    # input_file_name = "Pruebas/input3.txt"
 
     # yalex_file_name = "Pruebas/yalex3.yal"
     # input_file_name = "Pruebas/input3.txt"
