@@ -7,6 +7,7 @@ from Tree import Tree
 from TokensReader import regexCreate
 from Reader import Reader
 from analyzer import *
+from TokensReader2 import *
 
 if __name__ == "__main__":
 
@@ -39,4 +40,16 @@ if __name__ == "__main__":
     Reader()
 
     # Token identifier
-    analizar("YALex/srl-2.yal")
+    analizar("YALex/srl-1.yal")
+
+    # # leer el archivo de entrada
+    # with open("Pruebas/input1.txt", "r") as f:
+    #     input_text = f.read()
+
+    # # llamar a la función para reescribir el archivo
+    # rewritten_text = reescribir_archivo(input_text)
+
+    # # imprimir la lista de valores resultante
+    # if rewritten_text:
+    #     values_list = get_values_list(rewritten_text)
+    #     print("Lista de valores resultante:", values_list)

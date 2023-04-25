@@ -1,10 +1,16 @@
 from TokensReader2 import reescribir_archivo, get_values_list, get_variable_names
-from NFA2 import regex_to_enfa, enfa_to_graphviz, generate_mega_enfa_graph
+from NFA2 import regex_to_enfa, Simulate_epsilonNFA, Simulate_megautomata
 
 def Reader():
     # Input file names
-    yalex_file_name = "YALex/slr-2.yal"
-    input_file_name = "YALex/input3yal.txt"
+    yalex_file_name = "YALex/slr-1.yal"
+    input_file_name = "YALex/input1yal.txt"
+
+    # yalex_file_name = "Pruebas/yalex1.yal"
+    # input_file_name = "Pruebas/input1.txt"
+
+    # yalex_file_name = "Pruebas/yalex3.yal"
+    # input_file_name = "Pruebas/input3.txt"
 
     # Read the Yalex file and input file
     with open(yalex_file_name, "r") as file:
@@ -18,7 +24,7 @@ def Reader():
 
     if rewritten_text is None:
         # If there are errors in the Yalex file, print an error message and return
-        print("Se detectaron errores en el archivo de entrada. Por favor, corrige los errores e intenta nuevamente.")
+        print("Existen errores.")
         return
 
     variable_names = get_variable_names(rewritten_text)
@@ -39,11 +45,11 @@ def Reader():
     # Generate a Graphviz representation for each epsilon-NFA and save it to a file
     for idx, enfa in enumerate(enfas):
         identifier = identifiers[idx]
-        enfa_graph = enfa_to_graphviz(enfa, identifier)
+        enfa_graph = Simulate_epsilonNFA(enfa, identifier)
         enfa_graph.render(f"epsilonNFA{idx}", view=True)
 
     # Generate a mega epsilon-NFA from all the epsilon-NFAs and create a Graphviz representation
-    mega_enfa_graph = generate_mega_enfa_graph(enfas, identifiers)
+    mega_enfa_graph = Simulate_megautomata(enfas, identifiers)
     mega_enfa_graph.render("megautomata", view=True)
 
     # Write the compiled regex expressions to a Python file

@@ -8,7 +8,7 @@ def regex_to_enfa(regex_str):
 
 # Convert an ENFA to a Graphviz graph
 # The identifier parameter is used to label final states with an identifier (e.g., a category)
-def enfa_to_graphviz(enfa, identifier=None):
+def Simulate_epsilonNFA(enfa, identifier=None):
     # Create a new graph with the name "ENFA"
     graph = Digraph("ENFA", format="png")
     # Set the layout direction of the graph
@@ -42,7 +42,7 @@ def enfa_to_graphviz(enfa, identifier=None):
 
 # Generate a graph of multiple ENFAs combined into one
 # The identifiers parameter is used to label final states with an identifier (e.g., a category)
-def generate_mega_enfa_graph(enfas, identifiers=None):
+def Simulate_megautomata(enfas, identifiers=None):
     # Create a new graph with the name "Combined_ENFA"
     mega_graph = Digraph("Combined_ENFA", format="png")
     # Add a filled circle node for the starting state
