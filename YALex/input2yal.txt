@@ -1,3 +1,3 @@
 ajk32 34kl4 if for 11 22
-3.14 42.0 "una palabra"
-"es una prueba jeje 11" "hola"
+3.14 42.0 
+"es una prueba jeje 11"

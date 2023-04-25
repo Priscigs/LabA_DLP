@@ -48,7 +48,7 @@ def Simulate_megautomata(enfas, identifiers=None):
     # Add a filled circle node for the starting state
     mega_start_state = "MegaStart"
     mega_graph.attr(rankdir="LR")
-    mega_graph.attr("node", shape="circle", style="filled", fillcolor="yellow")
+    mega_graph.node(str(mega_start_state), shape="circle", style="filled", fillcolor="yellow")
     mega_graph.node(str(mega_start_state))
 
     # Initialize the state mapping with the current maximum state
