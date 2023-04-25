@@ -12,10 +12,9 @@ delim = r"[ \t\n]"
 expresion_total = re.compile(f"({digits}|{decimal}|{letter}|{operand}|{poww}|{delim})")
 print(expresion_total)
 
-archivo_input = "2 \n2342 +  2 * 3 = 2350\n323.123 - -21.35 = 301.773\n0x3F - 0x1A = 0x25\n4 ^ 2 / 4 = 4"
-# archivo_input = "10 20.5 0xA1B2 + - * / ^\n42 3.14 0x12345 * / ^ + -"
-# archivo_input = "9 8.5 0xA1B2 + - * / ^ 2 1\n4 3.1 0x12345 * / ^ + - 5 ?"
-# archivo_input = "a1 b2 for if 10 20\nwhile sum123 + - * /"
+# Read file
+with open("YALex/input1yal.txt", "r") as archivo:
+    archivo_input = archivo.read()
 
 def analizar(input):
     tokens = expresion_total.findall(input)
