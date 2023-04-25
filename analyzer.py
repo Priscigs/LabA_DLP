@@ -18,6 +18,7 @@ archivo_input = "2 \n2342 +  2 * 3 = 2350\n323.123 - -21.35 = 301.773\n0x3F - 0x
 
 def analizar(input):
     tokens = expresion_total.findall(input)
+    print("----------------TOKENS----------------")
     for token in tokens:
         if re.match(digits, token):
             print(f"Digits: {token}")
