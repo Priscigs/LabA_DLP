@@ -1,5 +1,5 @@
-from TokensReader2 import reescribir_archivo, get_values_list, get_variable_names
-from NFA2 import regex_to_enfa, Simulate_epsilonNFA, Simulate_megautomata
+from TokensReader2 import rewrite, getTokensList, get_variable_names
+from SimulationNFA2 import regex_to_enfa, Simulate_epsilonNFA, Simulate_megautomata
 
 def Reader():
     # Input file names
@@ -23,18 +23,18 @@ def Reader():
         input_text = file.read().replace('\n', '')
 
     # Rewrite the Yalex file to Python regex format and get variable names and regex values
-    rewritten_text = reescribir_archivo(yalex_text)
+    rewritten_text = rewrite(yalex_text)
 
     if rewritten_text is None:
         # If there are errors in the Yalex file, print an error message and return
-        print("Existen errores.")
+        print("You have errore!!")
         return
 
     variable_names = get_variable_names(rewritten_text)
-    resultado = get_values_list(rewritten_text)
+    resultado = getTokensList(rewritten_text)
 
     # Convert each regex value to an epsilon-NFA
-    enfas = [regex_to_enfa(regex) for regex in resultado]
+    nfaEpsilon = [regex_to_enfa(regex) for regex in resultado]
 
     # Create a dictionary of categories (variable names) for each regex value
     categorias = {}
@@ -43,14 +43,14 @@ def Reader():
             categorias[resultado[i]] = var_name
 
     # Create a list of identifiers (variable names) for each epsilon-NFA
-    identifiers = [categorias.get(regex, "Desconocido") for regex in resultado]
+    identifiers = [categorias.get(regex, "Unknown") for regex in resultado]
 
     # Generate a Graphviz representation for each epsilon-NFA and save it to a file
-    for idx, enfa in enumerate(enfas):
+    for idx, enfa in enumerate(nfaEpsilon):
         identifier = identifiers[idx]
         enfa_graph = Simulate_epsilonNFA(enfa, identifier)
         enfa_graph.render(f"epsilonNFA{idx}", view=True)
 
     # Generate a mega epsilon-NFA from all the epsilon-NFAs and create a Graphviz representation
-    mega_enfa_graph = Simulate_megautomata(enfas, identifiers)
+    mega_enfa_graph = Simulate_megautomata(nfaEpsilon, identifiers)
     mega_enfa_graph.render("megautomata", view=True)

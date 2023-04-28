@@ -23,7 +23,7 @@ def get_used_variables(input_text):
     return set(used_variables)
 
 # function to rewrite the input text by substituting variable values in expressions
-def reescribir_archivo(input_text):
+def rewrite(input_text):
     lines = input_text.split("\n")
     variables = {} # dictionary to store variable values
     errors = [] # list to store any validation errors
@@ -69,7 +69,7 @@ def reescribir_archivo(input_text):
     return "\n".join(output_lines)
 
 # function to extract a list of values from the rewritten text
-def get_values_list(rewritten_text):
+def getTokensList(rewritten_text):
     lines = rewritten_text.split("\n")
     values_list = []
 
@@ -84,7 +84,7 @@ def get_values_list(rewritten_text):
 # This function finds the identifier (category) associated with the symbol that transitions to a final state in an ENFA.
 # It takes as input an ENFA (enfa) and a dictionary (categories) mapping symbols to categories.
 # It returns the category associated with the symbol that transitions to a final state, or "Desconocido" (unknown) if no such symbol is found.
-def find_identifier_from_transitions(enfa, categories):
+def getToken(enfa, categories):
     for from_state, to_dict in enfa._transition_function._transitions.items():
         for symbol, to_states in to_dict.items():
             for to_state in to_states:
