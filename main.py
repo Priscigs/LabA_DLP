@@ -3,6 +3,12 @@ from ShuntingYard import ShuntingYard
 from SimulationNFA import SimulationNFA
 from SimulationDFA import SimulationDFA
 from SimulationTree import SimulationTree
+from SimulationLR0 import SimulationLR0
+from Grammar import Grammar
+from TokensReader import regexCreate, rules
+from CreateAut import createReAfn
+from AutomatonLR0 import Conjunto, SyntaxAutomata
+from TokenCheck import *
 from Subconjuntos import *
 from TokensReader import *
 from TreeContinue import *
@@ -26,6 +32,8 @@ if __name__ == "__main__":
 
     # Lex file to read and give the regular definition
     file = "YALex/slr-4.yal"
+
+    ## LAB D NO TERMINADO
 
     if regexCreate(file):
         regex = regexCreate(file)
@@ -63,3 +71,26 @@ if __name__ == "__main__":
             file.write("\tfor i in tokens:\n")
             file.write("\t\tprint('token: ', i)\n")
 
+    # LAB E
+
+    if(prod:=readYalp('Yapar/slr-1.yalp')):
+        afn = rules('YALex/slr-1.yal')
+        if(checkTokens(afn[1].values(), prod[1])):
+            g = Grammar(*prod)
+            print(" ")
+            print('No Terminales: ', g.nonterminals)
+            print('Terminales: ', g.terminals)
+            print('Producciones: ', g.prod)
+            print('Tokens: ', g.tokens)
+            print('Inicial: ', g.initial)
+            print(" ")
+            
+            g.AugmentedGrammar()
+            
+            c0 = Conjunto(g, 0, puntoS={g.initial: g.prod[g.initial]})
+
+            a1 = SyntaxAutomata(c0)
+            
+            a2 = SimulationLR0(a1)
+        else:
+            print('Los tokens no son iguales entre archivos')

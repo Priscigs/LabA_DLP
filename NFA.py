@@ -58,57 +58,61 @@ class NFA():
         return alphabet
     
     def simulate2(self, input_str):
-        input_str = input_str.replace("\\n", "↓").replace("\\t", "→").replace("\\r", "↕").replace("\\s", "↔").replace(".","▪").replace(" ", "□")
+        # Replace special characters with corresponding symbols
+        input_str = input_str.replace("\\n", "↓").replace("\\t", "→").replace("\\r", "↕").replace("\\s", "↔").replace(".", "▪").replace(" ", "□")
         input_str = input_str.replace("＋", "+")
-        current_states = set(Closure(self.transitions, self.initial_state.label))        
-        #Recorrer el input string
-        #inicializar estados al inicio
-        #Revisar si con alguno de los estados en los que estamos se tiene una transición con el simbolo en cuestión
-        #Ahora hacer lo mismo pero con los nuevos estados. 
-        for symbol in input_str:   
+        
+        # Initialize current states with the closure of the initial state
+        current_states = set(Closure(self.transitions, self.initial_state.label))
+
+        # Process each symbol in the input string
+        for symbol in input_str:
             next_states = set()
+            # Perform multimove for each current state and symbol
             next_states.update(multimove(self.transitions, current_states, symbol))
             current_states = set()
+            # Update current states with the closure of the next states
             for state in next_states:
                 current_states.update(Closure(self.transitions, state))
-                
-                
-        #print(current_states)
+
         final_names = [i.label for i in self.accept_state]
-        #print(" ")
-        #print(final_names)
+
+        # Check if any of the current states is a final state
         for i in final_names:
             if i in current_states:
                 idx = final_names.index(i)
                 return True, self.accept_state[idx].token
-        return  False, None
-        
+        return False, None
+
     def changeNames(self, initial_state):
         stack = [self.initial_state]
         visited = [self.initial_state]
         counter = initial_state
-        while stack:
 
+        # Perform depth-first search to change state names
+        while stack:
             lookat = stack.pop()
-            #print("bbbbb", lookat)
+
             estados = lookat.GetTransitionStates()
-            #print("aaaaaa", estados)
-            #print(" ")
+
             if estados:
                 for i in estados:
                     if i not in visited:
                         visited.append(i)
                         stack.append(i)
+                # Change state name to s[counter]
                 lookat.label = f"s{counter}"
-            counter+=1
+            counter += 1
+
         self.transitions = self.Transiciones()
         return counter
-    
+
 def Closure(transiciones: dict, state: str):
     epsilon = "ε"
     visited = {state}
     stack = [state]
-    
+
+    # Compute the closure of the given state using epsilon transitions
     while stack:
         estado = stack.pop()
         if estado in transiciones and epsilon in transiciones[estado]:
@@ -124,9 +128,9 @@ def Closure(transiciones: dict, state: str):
                     visited.add(epsilon_transitions)
     return visited
 
-def multimove(transiciones: dict, estados:list, character: str):
-    
+def multimove(transiciones: dict, estados: list, character: str):
     group = set()
+    # Perform multimove for each state in the given list of states and symbol
     for i in estados:
         if i in transiciones and character in transiciones[i]:
             if isinstance(transiciones[i][character], list):

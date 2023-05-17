@@ -4,13 +4,6 @@ import networkx as nx
 import pydot
 from graphviz import Digraph
 
-#Clase Automata para el algoritmo de thompson
-
-#Automata tiene un estado inicial y uno final, estado de aceptación
-#start - Estado inicial
-#final - Estado final
-
-
 class Automata():
     def __init__(self, start: State, final:State) -> None:
         self.start: State = start
@@ -20,8 +13,8 @@ class Automata():
         self.trans_symbols  = {}
         self.alphabet = []
         
-    #prints transitions
     def show(self):
+        # Display the transitions of the automaton
         stack = [self.start]
         visited = []
         while len(stack) != 0:
@@ -34,9 +27,8 @@ class Automata():
                     print(afn.name, "-->",value,"-->", key.name)
             visited.append(afn)
 
-    
-    #pone todas las transiciones en un diccionario
     def Transiciones(self):
+        # Compute the transition dictionary of the automaton
         stack = [self.start]
         visited = []
         trans = {}
@@ -47,19 +39,12 @@ class Automata():
                 if afn not in visited:
                     stack.append(key)
                     if afn.name in trans.keys():
-
                         if value is list:
                             trans[afn.name] = {tuple(value): [key.name, anterior]}
                         else:
                             trans[afn.name] = {value: [key.name, anterior]}
-                        
-                    #Transiiciones
-                    #Trans = transiciones
-                    #trans[afn.name] = {nombre del estado actual: {simobolo: estado al que va}}
-                    
                     else:
                         if value is list:
-    
                             trans[afn.name] = {tuple(value): key.name}
                         else:
                             trans[afn.name] = {value: key.name}
@@ -70,6 +55,7 @@ class Automata():
         return trans
     
     def getInfo(self):
+        # Retrieve information about edges and transition symbols for visualization
         self.edges = []
         self.trans_symbols = {}
             
@@ -84,14 +70,13 @@ class Automata():
                         self.trans_symbols[(i,k)] = j
         
     def ShowGraph(self, name="graph.png"):
+        # Display the automaton as a graph using networkx and pydot
         self.getInfo()
         G = nx.DiGraph()
         G.add_edges_from(self.edges)
 
         pydot_graph = nx.drawing.nx_pydot.to_pydot(G)
 
-        
-        
         for edge in G.edges():
             one,two = edge[0], edge[1]
             edge_label = str(self.trans_symbols[(one,two)])
@@ -103,12 +88,10 @@ class Automata():
         
         pydot_graph.get_node(self.final[0].name)[0].set_style('filled',)
         pydot_graph.get_node(self.final[0].name)[0].set('fillcolor','red')
-        
-
-            
         pydot_graph.write_png(name, encoding="utf-8")
         
     def ShowGraph2(self, name = "graph"):
+        # Display the automaton as a graph using graphviz and Digraph
         self.getInfo()
         
         final_names = [i.name for i in self.final]
@@ -123,6 +106,7 @@ class Automata():
         dot.render(name, format='pdf', view=True, cleanup=True)
 
     def getAplhabet(self):
+        # Get the alphabet of the automaton
         alphabet = []
         for transitions in self.transitions.values():
             for character in transitions.keys():
@@ -131,31 +115,21 @@ class Automata():
         return alphabet
     
     def getStates(self):
+        # Get the states of the automaton
         states = list(self.transitions.keys())
-        
-        
         states.extend(self.final.name)
         return states
             
     
     def subconjuntos(self):
-        
+        # Compute the subconjuntos of the automaton
         stack = []
         visited = []
         trans = {}
-        #
-        
-        #if simbolo =="epsilon":
-            #stack.append(key) (Se añade el estado al que lleva con la transicion epsilon)
-            #subconjuntos = [[transiciones epsilon del primer recorrido], [transiciones segundo recorrido]....]
-            #subconjuntos[0] = transiciones primer recorrido
-            #for subconjuntos[0] (recorrer todos los estados que se encuentran en esa lista)
-            #otro for para recorrer los estados de cada uno de los estados en subconjuntos[0]
+
         while len(stack) != 0:
-            #afn -> estado actual en el que se está
             afn = stack.pop()
             
-            #Transiciones del estado actual
             transiciones = afn.transitions.items()
 
             for key, value in transiciones:
@@ -163,11 +137,6 @@ class Automata():
                     stack.append(key)
                     if afn.name in trans.keys():
                         trans[afn.name] = {value: [key.name, anterior]}
-                        
-                    #Transiiciones
-                    #Trans = transiciones
-                    #trans[afn.name] = {nombre del estado actual: {simobolo: estado al que va}}
-                    
                     else:
                         trans[afn.name] = {value: key.name}
                 anterior = key.name
@@ -177,19 +146,13 @@ class Automata():
         return trans
     
     def simulate(self, input_str):
+        # Simulate the automaton for the given input string
         current_states = set(Closure(self.transitions, self.start.name))
-        #bbbabbb
-        
-        #Recorrer el input string
-        #inicializar estados al inicio
-        #Revisar si con alguno de los estados en los que estamos se tiene una transición con el simbolo en cuestión
-        #Ahora hacer lo mismo pero con los nuevos estados. 
+
         for symbol in input_str:
-            
             next_states = set()
             
             for state in current_states:
-                
                 next_states.update(get_groups(self.transitions, state, symbol))
 
             current_states = set()
@@ -198,25 +161,20 @@ class Automata():
         return  self.final[0].name in current_states
     
     def simulate2(self, input_str):
+        # Simulate the automaton for the given input string
         input_str = input_str.replace("\\n", "↓").replace("\\t", "→").replace("\\r", "↕").replace("\\s", "↔").replace(".","▪").replace(" ", "□")
         input_str = input_str.replace("＋", "+")
         current_states = set(Closure(self.transitions, self.start.name))        
-        #Recorrer el input string
-        #inicializar estados al inicio
-        #Revisar si con alguno de los estados en los que estamos se tiene una transición con el simbolo en cuestión
-        #Ahora hacer lo mismo pero con los nuevos estados. 
+
         for symbol in input_str:   
             next_states = set()
             next_states.update(multimove(self.transitions, current_states, symbol))
             current_states = set()
             for state in next_states:
                 current_states.update(Closure(self.transitions, state))
-                
-                
-        #print(current_states)
+
         final_names = [i.name for i in self.final]
-        #print(" ")
-        #print(final_names)
+
         for i in final_names:
             if i in current_states:
                 idx = final_names.index(i)
@@ -224,16 +182,13 @@ class Automata():
         return  False, None
         
     def changeNames(self, start):
+        # Change the names of the automaton states
         stack = [self.start]
         visited = [self.start]
         counter = start
         while stack:
-
             lookat = stack.pop()
-            #print("bbbbb", lookat)
             estados = lookat.GetTransitionStates()
-            #print("aaaaaa", estados)
-            #print(" ")
             if estados:
                 for i in estados:
                     if i not in visited:
@@ -243,8 +198,9 @@ class Automata():
             counter+=1
         self.transitions = self.Transiciones()
         return counter
-    
+
 def Closure(transiciones: dict, state: str):
+    # Compute the epsilon closure of a state in the automaton
     epsilon = "ε"
     visited = {state}
     stack = [state]
@@ -265,7 +221,7 @@ def Closure(transiciones: dict, state: str):
     return visited
 
 def multimove(transiciones: dict, estados:list, character: str):
-    
+    # Get the states that can be reached from a set of states with a given input character
     group = set()
     for i in estados:
         if i in transiciones and character in transiciones[i]:
@@ -275,9 +231,8 @@ def multimove(transiciones: dict, estados:list, character: str):
                 group.add(transiciones[i][character])
     return group
 
-
-#Para esta función se ingresa lista de estados (de la clausura epsilon) y las transiciones del AFND
 def get_groups(transiciones: dict, estados:list, character: str):
+    # Get the epsilon closure of the states that can be reached from a set of states with a given input character
     group = set()
     for i in estados:
         if i in transiciones and character in transiciones[i]:
@@ -289,8 +244,3 @@ def get_groups(transiciones: dict, estados:list, character: str):
     for state in group:
         closure_states.update(Closure(transiciones, set(state)))
     return closure_states
-
-
-
-    
-    

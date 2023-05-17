@@ -2,12 +2,13 @@ class State:
     # The symbol class represents a symbol in a symbol machine, with a label and transitions to other symbols.
 
     # Initialize a new symbol with the given label (optional) and transitions (optional).
-    def __init__(self, label: str = None, transitions: dict = None):
+    def __init__(self, label: str = None, transitions: dict = None, token:str = None):
         # If no transitions are given, set transitions to an empty dictionary.
         self.transitions = transitions or {}
          
         # Set the label of the symbol.
         self.label = label
+        self.token = token
         
     # Add a new transition from this symbol to another symbol with a given state label.
     def add_transtition(self, symbol, state):
@@ -25,4 +26,15 @@ class State:
     def get_transitions(self):
         # Get all the transitions from this symbol as a dictionary of symbol labels to lists of state labels.
         return self.transitions
+    
+    def GetTransitionStates(self):
+        states = set()
+        
+        if self.transitions:
+            for key,value in self.transitions.items():
+                states.add(key)
+            return states
+        else:
+            return None
+        
 
