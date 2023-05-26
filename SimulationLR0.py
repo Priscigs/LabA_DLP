@@ -18,4 +18,4 @@ def SimulationLR0(self, name="LR(0)"):
         for key, value in self.edges.items():
             G.edge(str(key[0].number), str(key[1].number), label=value)
 
-        G.render(filename=name, directory='./outputsLabs', format='png', view=True)
+        G.render(filename=name, directory='./outputsLabs', format='png')

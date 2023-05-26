@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import pydot
 from graphviz import Digraph
+import os
 
 def SimulationNFA(self): 
     # Initialize a list to store the edges
@@ -53,5 +54,15 @@ def SimulationNFA(self):
     
     # Set the rank direction of the PyDot graph to left-to-right
     pydot_graph.set_rankdir('LR') 
-    # Write the PyDot graph to a PNG image file
-    pydot_graph.write_png('nfaThompson.png', encoding="utf-8") 
+
+    # Ruta completa de la carpeta donde deseas guardar el archivo
+    folder_path = './outputsLabs'
+
+    # Nombre del archivo
+    file_name = 'nfaThompson.png'
+
+    # Ruta completa del archivo
+    file_path = os.path.join(folder_path, file_name)
+
+    # Escribir el archivo PNG en la carpeta especificada
+    pydot_graph.write_png(file_path, encoding='utf-8')

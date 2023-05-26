@@ -16,30 +16,34 @@ from Automaton import *
 
 if __name__ == "__main__":
 
-    # # Regular Expression
-    # expression = "ab*ab*"
+    # LAB B
 
-    # # Using Shunting Yard Algorithm for infix to postfix
-    # postfix = ShuntingYard(expression)
+    # Regular Expression
+    expression = "a(a?b*|c+)b|bba"
 
-    # # NFA Thompson
-    # nfa = Thompson(postfix)
-    # sim = SimulationNFA(nfa) 
+    # Using Shunting Yard Algorithm for infix to postfix
+    postfix = ShuntingYard(expression)
 
-    # # DFA Sub
-    # afd = Subconjuntos(nfa)
-    # sim2 = SimulationDFA(afd)
+    # NFA Thompson
+    nfa = Thompson(postfix)
+    sim = SimulationNFA(nfa) 
+
+    # DFA Sub
+    afd = Subconjuntos(nfa)
+    sim2 = SimulationDFA(afd)
 
     # Lex file to read and give the regular definition
-    file = "YALex/slr-4.yal"
+    file = "YALex/slr-3.yal"
 
     ## LAB D NO TERMINADO
 
     if regexCreate(file):
         regex = regexCreate(file)
 
-        # dfa = TreeToDFA(regex)
-        # dfa2 = SimulationTree(dfa)
+        # LAB C
+
+        dfa = TreeToDFA(regex)
+        dfa2 = SimulationTree(dfa)
 
         with open('Scanner.py', 'w', encoding="utf-8") as file:
             file.write("from DFA import DFA\n")

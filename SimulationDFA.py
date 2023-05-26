@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt 
 import networkx as nx 
-from graphviz import Digraph  
+from graphviz import Digraph 
+import os 
 
 # define a function to create a visual representation of a DFA object
 def SimulationDFA(self):
@@ -55,5 +56,14 @@ def SimulationDFA(self):
     # Set the rank direction of the PyDot graph to left-to-right
     pydot_graph.set_rankdir('LR') 
 
-    # save the PyDot graph as a PNG image
-    pydot_graph.write_png('dfaSub.png', encoding="utf-8")
+    # Ruta completa de la carpeta donde deseas guardar el archivo
+    folder_path = './outputsLabs'
+
+    # Nombre del archivo
+    file_name = 'dfaSub.png'
+
+    # Ruta completa del archivo
+    file_path = os.path.join(folder_path, file_name)
+
+    # Escribir el archivo PNG en la carpeta especificada
+    pydot_graph.write_png(file_path, encoding='utf-8')

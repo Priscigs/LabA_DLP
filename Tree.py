@@ -40,43 +40,44 @@ class Node():
     
 
         
-    def ShowGraph(self, name = "Tree"):
-        dot = Digraph()
-        for node in self.getNodes():
-            node_info = f"{str(node.name)}\n{str(node.value)}\n{str(node.firstPosition)}\n{str(node.lastPosition)}\n{str(node.followPos)}"
-            dot.node(node_info)
-        for node in self.getNodes():
-            node_info_root = f"{str(node.name)}\n{str(node.value)}\n{str(node.firstPosition)}\n{str(node.lastPosition)}\n{str(node.followPos)}"
-            
-            if node.left:
-                node_info_left = f"{str(node.left.name)}\n{str(node.left.value)}\n{str(node.left.firstPosition)}\n{str(node.left.lastPosition)}\n{str(node.left.followPos)}"
-                
-                dot.edge(node_info_root, node_info_left)
-
-            if node.right:
-                node_info_right = f"{str(node.right.name)}\n{str(node.right.value)}\n{str(node.right.firstPosition)}\n{str(node.right.lastPosition)}\n{str(node.right.followPos)}"
-                dot.edge(node_info_root, node_info_right)
-
-            
-        dot.render(name, format='png', view=True, cleanup=True)
-
-    # def ShowGraph(self, name="Tree"):
+    # def ShowGraph(self, name="SintaxTree", folder_path="./outputsLabs"):
     #     dot = Digraph()
     #     for node in self.getNodes():
-    #         node_info = f"{str(node.name)}\n{str(node.value)}"
-    #         dot.node(str(node.name), label=node_info)
+    #         node_info = f"{str(node.name)}\n{str(node.value)}\n{str(node.firstPosition)}\n{str(node.lastPosition)}\n{str(node.followPos)}"
+    #         dot.node(node_info)
     #     for node in self.getNodes():
-    #         node_info_root = f"{str(node.name)}\n{str(node.value)}"
+    #         node_info_root = f"{str(node.name)}\n{str(node.value)}\n{str(node.firstPosition)}\n{str(node.lastPosition)}\n{str(node.followPos)}"
             
     #         if node.left:
-    #             node_info_left = f"{str(node.left.name)}\n{str(node.left.value)}"
-    #             dot.edge(str(node.name), str(node.left.name), label='left')
+    #             node_info_left = f"{str(node.left.name)}\n{str(node.left.value)}\n{str(node.left.firstPosition)}\n{str(node.left.lastPosition)}\n{str(node.left.followPos)}"
+                
+    #             dot.edge(node_info_root, node_info_left)
 
     #         if node.right:
-    #             node_info_right = f"{str(node.right.name)}\n{str(node.right.value)}"
-    #             dot.edge(str(node.name), str(node.right.name), label='right')
+    #             node_info_right = f"{str(node.right.name)}\n{str(node.right.value)}\n{str(node.right.firstPosition)}\n{str(node.right.lastPosition)}\n{str(node.right.followPos)}"
+    #             dot.edge(node_info_root, node_info_right)
 
-    #     dot.render(name, format='png', view=True, cleanup=True)
+    #     file_path = f"{folder_path}/{name}"
+    #     dot.render(file_path, format='png', cleanup=True)
+
+    def ShowGraph(self, name="SintaxTreee", folder_path="./outputsLabs"):
+        dot = Digraph()
+        for node in self.getNodes():
+            node_info = f"{str(node.name)}\n{str(node.value)}"
+            dot.node(str(node.name), label=node_info)
+        for node in self.getNodes():
+            node_info_root = f"{str(node.name)}\n{str(node.value)}"
+            
+            if node.left:
+                node_info_left = f"{str(node.left.name)}\n{str(node.left.value)}"
+                dot.edge(str(node.name), str(node.left.name), label='left')
+
+            if node.right:
+                node_info_right = f"{str(node.right.name)}\n{str(node.right.value)}"
+                dot.edge(str(node.name), str(node.right.name), label='right')
+
+        file_path = f"{folder_path}/{name}"
+        dot.render(file_path, format='png', cleanup=True)
 
 
 
