@@ -66,3 +66,27 @@ def SimulationNFA(self):
 
     # Escribir el archivo PNG en la carpeta especificada
     pydot_graph.write_png(file_path, encoding='utf-8')
+
+class Match:
+    def __init__(self, nfa):
+        self.nfa = nfa
+
+    def match(self, input_string):
+        current_states = set([self.nfa.initial_state])
+
+        for symbol in input_string:
+            next_states = set()
+
+            for state in current_states:
+                transitions = self.nfa.get_transitions(state)
+
+                if transitions is not None and symbol in transitions:
+                    next_states.update(transitions[symbol])
+
+            if not next_states:
+                return False
+
+            current_states = next_states
+
+        return any(state in self.nfa.accept_states for state in current_states)
+

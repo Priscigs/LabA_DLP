@@ -4,7 +4,7 @@
 /* T → T ∗ F | T / F | F */
 /* F → ( E ) | id | number */
 
-%token ID
+token ID
 %token PLUS
 %token MINUS
 %token TIMES

@@ -1,4 +1,4 @@
-from DFA import DFA
+from SimulationNFA import SimulationNFA
 from Thompson import Thompson
 
 reg = '(@|→|↓)|(@|→|↓)+|(0123456789)|(0123456789)+|(0123456789)+(▪(0123456789)+)?(ε(＋|-)?(0123456789)+)?'
@@ -12,9 +12,10 @@ with open('inputYalex.txt', 'r', encoding='utf-8') as file:
 
 lines = [i.strip() for i in lines]
 errors = []
+sim = SimulationNFA(nfa)
 
 for i in range(len(lines)):
-	if nfa.simulate2(lines[i]) == False:
+	if sim == False:
 		errors.append(f'Syntax error on line {i} -> {lines[i]}')
 	else:
 		tokens.append(lines[i])

@@ -46,7 +46,7 @@ if __name__ == "__main__":
         dfa2 = SimulationTree(dfa)
 
         with open('Scanner.py', 'w', encoding="utf-8") as file:
-            file.write("from DFA import DFA\n")
+            file.write("from SimulationNFA import SimulationNFA\n")
             file.write("from Thompson import Thompson\n")
             file.write("\n")
             file.write(f"reg = '{regex}'\n")
@@ -60,9 +60,10 @@ if __name__ == "__main__":
             file.write("\n")
             file.write("lines = [i.strip() for i in lines]\n")
             file.write("errors = []\n")
+            file.write("sim = SimulationNFA(nfa)\n")
             file.write("\n")
             file.write("for i in range(len(lines)):\n")
-            file.write("\tif nfa.simulate2(lines[i]) == False:\n")
+            file.write("\tif sim == False:\n")
             file.write("\t\terrors.append(f'Syntax error on line {i} -> {lines[i]}')\n")
             file.write("\telse:\n")
             file.write("\t\ttokens.append(lines[i])\n")
