@@ -1,9 +1,5 @@
-
 from Tree import Node, CreateSyntaxTree, printTree
 from DFA import DFA
-
-
-
 
 def TreeToDFA(regex):
     
@@ -13,12 +9,9 @@ def TreeToDFA(regex):
     root.ShowGraph()
 
     followpos_table = root.getTable()  
-    # for i in followpos_table:
-    #     print(i)  
-    
-    # Encontramos el alfabeto de la tabla
+
     alphabet = set(entry[0] for entry in followpos_table if entry[0] != "#")
-    #print(alphabet)
+
     final = followpos_table[-1][1]
     initial =followpos_table[0][1]
     
@@ -29,7 +22,7 @@ def TreeToDFA(regex):
     
     while stack:
         look_at = stack.pop()
-        #print(alphabet)
+
         for letter in alphabet:
             nodos = set()
             for node in look_at:
@@ -39,11 +32,9 @@ def TreeToDFA(regex):
                 looked.append(nodos)
                 stack.append(nodos)
             trans.append((letter, look_at, nodos))
-            #print(looked)
     
     transition = [trans[i] for i in range(len(trans)) if (trans[i][1] and trans[i][2])]
 
-    #print(transition)
     names = {}
     count = 0
     for i in range(len(transition)):
@@ -81,7 +72,4 @@ def TreeToDFA(regex):
         if final in key and value not in accepting_states:
             accepting_states.append(value)
    
-    
-    # Inicializamos el estado inicial que sería el followpos de nuestro root.
-    
     return DFA(start_state, accepting_states, transitions)

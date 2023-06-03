@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # LAB B
 
     # Regular Expression
-    expression = "a(a?b*|c+)b|bba"
+    expression = "ab*ab*"
 
     # Using Shunting Yard Algorithm for infix to postfix
     postfix = ShuntingYard(expression)
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     sim2 = SimulationDFA(afd)
 
     # Lex file to read and give the regular definition
-    file = "YALex/slr-3.yal"
+    file = "YALex/slr-1.yal"
 
     ## LAB D NO TERMINADO
 
@@ -42,8 +42,8 @@ if __name__ == "__main__":
 
         # LAB C
 
-        dfa = TreeToDFA(regex)
-        dfa2 = SimulationTree(dfa)
+        # dfa = TreeToDFA(regex)
+        # dfa2 = SimulationTree(dfa)
 
         with open('Scanner.py', 'w', encoding="utf-8") as file:
             file.write("from SimulationNFA import SimulationNFA\n")
@@ -78,8 +78,8 @@ if __name__ == "__main__":
 
     # LAB E
 
-    if(prod:=readYalp('Yapar/slr-1.yalp')):
-        afn = rules('YALex/slr-1.yal')
+    if(prod:=readYalp('Yapar/slr-2.yalp')):
+        afn = rules('YALex/slr-2.yal')
         if(checkTokens(afn[1].values(), prod[1])):
             g = Grammar(*prod)
             print(" ")
@@ -89,13 +89,20 @@ if __name__ == "__main__":
             print('Tokens: ', g.tokens)
             print('Inicial: ', g.initial)
             print(" ")
+        
+            prod = readYalp('Yapar/slr-2.yalp')
             
-            g.AugmentedGrammar()
+            g1 = Grammar(*prod)
+            g1.AugmentedGrammar()
             
             c0 = Conjunto(g, 0, puntoS={g.initial: g.prod[g.initial]})
 
-            a1 = SyntaxAutomata(c0)
+            a1 = SyntaxAutomata(c0, g1)
             
             a2 = SimulationLR0(a1)
+
+            tabla = a1.CreateTable()
+            a1.print_table(tabla)
+    
         else:
             print('Los tokens no son iguales entre archivos')

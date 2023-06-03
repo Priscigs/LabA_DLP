@@ -240,3 +240,73 @@ def checkTokens(l1, l2):
         if token not in l1:
             return False
     return True
+
+def First2(grammar, X):
+    g = grammar
+    terminals = g.terminals
+    nonterminals = g.nonterminals
+    productions = g.prod
+    
+    
+    if X in terminals:
+        return X
+    else:
+        conjunto = []
+        if 'ε' in productions[X]:
+            conjunto.append('ε')
+            
+        for prod in productions[X]:
+            if prod in terminals:
+                conjunto.append(First2(g, prod))
+            else:
+                if prod[0]!=X:
+                    if len(prod)>1:
+                        if prod[0] in terminals:
+                            conjunto.append(First2(g, prod[0]))
+                            continue
+                        else:
+                            count = 0
+                            for i in range(len(prod)-1):
+                                conjunto.append(First2(g, prod[i]))
+                                if 'ε' in productions[prod[i]] and count == i:
+                                    conjunto.append(First2(g, prod[i+1]))
+                                    count+=1
+                            count = 0
+                            for i in range(len(prod)):
+                                if 'ε' in productions[prod[i]] and count == i:
+                                    conjunto.append(First2(g, prod[i+1]))
+                                    count+=1
+                            conjunto.append(First2(g, 'ε'))
+                                
+                    else:
+                        conjunto = [*First2(g, prod)]
+    return conjunto
+
+def Next(grammar: Grammar, X):
+    g = grammar
+    terminals = g.terminals
+    nonterminals = g.nonterminals
+    productions = g.prod
+    
+    conjunto = []
+    new_prod = []
+    
+    if X == g.initial:
+        conjunto.append('$')
+        
+    for key, value in productions.items():
+        for i in value:
+            if X in i and i not in terminals:
+                new_prod.append((key,i))
+  
+  
+    for key, value in new_prod:
+        idx = value.index(X)
+        if idx != len(value)-1:
+            datos = [i for i in First2(g, value[idx+1]) if i!="ε"]
+            conjunto.extend(datos)
+        if (idx!=len(value)-1 and 'ε' in First2(g, value[2])) or (value[-1]==X):
+            if key !=X:
+                conjunto.extend(Next(g, key))
+                
+    return set(conjunto)

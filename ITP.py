@@ -1,18 +1,9 @@
-import re
 
 # Operator precedence dictionary
 PRECEDENCE = {"|": 0, ".": 1, "*": 2, "+": 2, "?": 2}
 
 def convert_positive_kleene(regex):
-    """
-    Converts positive closure (+) and optional (?) operators to their equivalent regular expression form.
 
-    Args:
-        regex (str): The regular expression to convert.
-
-    Returns:
-        str: The converted regular expression.
-    """
     new_regex = ""
     adder = 0
     for i in range(len(regex)):
@@ -51,15 +42,7 @@ def convert_positive_kleene(regex):
 
 
 def shunting_yard(regex):
-    """
-    Converts an infix regular expression to postfix using the Shunting Yard algorithm.
 
-    Args:
-        regex (str): The infix regular expression.
-
-    Returns:
-        str: The postfix regular expression.
-    """
     output = []
     opstack = []
     precedence = {'|': 0, '.': 1, '*': 2, '+': 2, '?': 2}
@@ -86,15 +69,7 @@ def shunting_yard(regex):
 
 
 def InfixPostfix(regex: str):
-    """
-    Converts an infix regular expression to postfix.
 
-    Args:
-        regex (str): The infix regular expression.
-
-    Returns:
-        str: The postfix regular expression.
-    """
     regex = convert_positive_kleene(regex)
     if CatchErrors(regex) == False:
         return
@@ -165,15 +140,7 @@ def InfixPostfix(regex: str):
 
 
 def CatchErrors(regex: str):
-    """
-    Checks for errors in the regular expression.
 
-    Args:
-        regex (str): The regular expression to check.
-
-    Returns:
-        bool: True if no errors found, False otherwise.
-    """
     operadores = ["|", "*", "+", ".", "?"]
     if not regex:
         return False
